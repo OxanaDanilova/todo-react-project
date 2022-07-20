@@ -1,0 +1,12 @@
+.task-list {
+  width: 45vw;
+  min-width: 600px;
+  margin: 1rem auto;
+  display: grid;
+  grid-row-gap: 0;
+}
+
+.task-list-header {
+  background-color: slateblue;
+  color: white;
+}

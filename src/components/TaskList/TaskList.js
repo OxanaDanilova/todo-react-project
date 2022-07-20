@@ -1,3 +1,4 @@
+import React from "react";
 import "./TaskList.scss";
 import Task from "./Task/Task";
 
@@ -14,6 +15,7 @@ function TaskList(props) {
       done: true,
     },
   ];
+
   return (
     <section className="task-list">
       <div className="task task-list-header">
@@ -21,7 +23,7 @@ function TaskList(props) {
         <p>Task</p>
         <p>Done</p>
       </div>
-      {tasksArr.map((task, index) => {
+      {[...tasksArr].map((task, index) => {
         return <Task task={task} key={index} />;
       })}
     </section>
