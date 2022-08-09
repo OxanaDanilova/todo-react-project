@@ -11,7 +11,15 @@ function TaskList(props) {
         <p>Done</p>
       </div>
       {[...props.tasksArr].map((task, index) => {
-        return <Task task={task} key={index} />;
+        return (
+          <Task
+            task={task}
+            key={index}
+            index={index}
+            deleteTask={props.deleteTask}
+            changeTask={props.changeTask}
+          />
+        );
       })}
     </section>
   );

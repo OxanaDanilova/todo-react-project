@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 import "./Task.scss";
 
 function Task(props) {
@@ -16,49 +18,73 @@ function Task(props) {
   const handleMode = () => {
     setEditMode(!editMode);
   };
+  const deleteTask = () => {
+    props.deleteTask(props.index);
+  };
+
+  useEffect(() => {
+    props.changeTask(props.index, task);
+  }, [task]);
   return (
     <>
       {!editMode ? (
         <div className="task">
-          <p>{task.date}</p>
+          <p>{task.date} </p>
+
           <p>{task.task_name}</p>
           <p>
-            <input
+            <Form.Check
               type="checkbox"
               checked={task.done}
               name="done"
               onChange={changeTaskDone}
+              style={{ alignSelf: "center", justifySelf: "center" }}
             />
           </p>
-          <button className="edit-btn" onClick={handleMode}>
-            Edit
-          </button>
+
+          <Button onClick={handleMode} variant="info">
+            <i className="fa-solid fa-pencil"></i>
+          </Button>
+          <Button onClick={deleteTask} variant="danger">
+            &times;
+          </Button>
         </div>
       ) : (
         <div className="task">
-          <input
+          <Form.Control
+            placeholder="Username"
+            aria-label="Username"
+            aria-describedby="basic-addon1"
             type="text"
             name="date"
             value={task.date}
             onChange={changeTaskDone}
           />
-          <input
+
+          <Form.Control
+            placeholder="Username"
+            aria-label="Username"
+            aria-describedby="basic-addon1"
             type="text"
             name="task_name"
             value={task.task_name}
             onChange={changeTaskDone}
           />
-          <p>
-            <input
-              type="checkbox"
-              checked={task.done}
-              name="done"
-              onChange={changeTaskDone}
-            />
-          </p>
-          <button className="save-btn" onClick={handleMode}>
-            Save
-          </button>
+
+          <Form.Check
+            type="checkbox"
+            checked={task.done}
+            name="done"
+            onChange={changeTaskDone}
+            style={{ alignSelf: "center", justifySelf: "center" }}
+          />
+
+          <Button onClick={handleMode} variant="success">
+            <i className="fa-solid fa-check"></i>
+          </Button>
+          <Button onClick={deleteTask} variant="danger">
+            &times;
+          </Button>
         </div>
       )}
     </>

@@ -22,12 +22,31 @@ function App() {
       { date: date, task_name: taskName, done: false },
     ]);
   }
+  const deleteTask = (id) => {
+    setTasksArr(tasksArr.filter((task, index) => index !== id));
+    console.log(tasksArr);
+  };
+  const changeTask = (id, changedTask) => {
+    setTasksArr(
+      tasksArr.map((task, index) => {
+        if (index === id) {
+          task = changedTask;
+        }
+        return task;
+      })
+    );
+    console.log(tasksArr);
+  };
   return (
     <div className="App">
       <div className="App-header">
         <h1>Task list</h1>
         <AddTask addNewTask={addNewTask} />
-        <TaskList tasksArr={tasksArr} />
+        <TaskList
+          tasksArr={tasksArr}
+          deleteTask={deleteTask}
+          changeTask={changeTask}
+        />
 
         <a
           className="App-link"
