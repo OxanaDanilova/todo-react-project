@@ -1,13 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.scss";
+import AddTask from "./components/AddTask/AddTask";
 import TaskList from "./components/TaskList/TaskList";
 
 function App() {
+  const [tasksArr, setTasksArr] = useState([
+    {
+      date: "10-07-2022",
+      task_name: "Bad putzen",
+      done: false,
+    },
+    {
+      date: "12-07-2022",
+      task_name: "Lebensmittel kaufen",
+      done: true,
+    },
+  ]);
+  function addNewTask(date, taskName) {
+    setTasksArr([
+      ...tasksArr,
+      { date: date, task_name: taskName, done: false },
+    ]);
+  }
   return (
     <div className="App">
       <div className="App-header">
         <h1>Task list</h1>
-        <TaskList />
+        <AddTask addNewTask={addNewTask} />
+        <TaskList tasksArr={tasksArr} />
 
         <a
           className="App-link"
