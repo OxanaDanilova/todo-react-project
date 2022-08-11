@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "./Task.scss";
 
-function Task(props) {
-  const [task, setTask] = useState(props.task);
+function Task({ index, task, dispatch }) {
   const [editMode, setEditMode] = useState(false);
   const changeTaskDone = ({ target }) => {
     if (target.name === "done") {
@@ -12,19 +11,19 @@ function Task(props) {
     } else {
       task[target.name] = target.value;
     }
-    console.log(task);
-    setTask({ ...task });
+
+    dispatch({
+      type: "changeTask",
+      payload: {
+        task: task,
+        index: index,
+      },
+    });
   };
   const handleMode = () => {
     setEditMode(!editMode);
   };
-  const deleteTask = () => {
-    props.deleteTask(props.index);
-  };
 
-  useEffect(() => {
-    props.changeTask(props.index, task);
-  }, [task]);
   return (
     <>
       {!editMode ? (
@@ -32,7 +31,7 @@ function Task(props) {
           <p>{task.date} </p>
 
           <p>{task.task_name}</p>
-          <p>
+          <section>
             <Form.Check
               type="checkbox"
               checked={task.done}
@@ -40,12 +39,15 @@ function Task(props) {
               onChange={changeTaskDone}
               style={{ alignSelf: "center", justifySelf: "center" }}
             />
-          </p>
+          </section>
 
           <Button onClick={handleMode} variant="info">
             <i className="fa-solid fa-pencil"></i>
           </Button>
-          <Button onClick={deleteTask} variant="danger">
+          <Button
+            onClick={() => dispatch({ type: "deleteTask", payload: index })}
+            variant="danger"
+          >
             &times;
           </Button>
         </div>
@@ -82,9 +84,14 @@ function Task(props) {
           <Button onClick={handleMode} variant="success">
             <i className="fa-solid fa-check"></i>
           </Button>
-          <Button onClick={deleteTask} variant="danger">
-            &times;
-          </Button>
+          {
+            <Button
+              onClick={() => dispatch({ type: "deleteTask", payload: index })}
+              variant="danger"
+            >
+              &times;
+            </Button>
+          }
         </div>
       )}
     </>

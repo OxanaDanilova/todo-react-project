@@ -1,10 +1,27 @@
-import React, { useState } from "react";
+import React, { useReducer } from "react";
 import "./App.scss";
 import AddTask from "./components/AddTask/AddTask";
 import TaskList from "./components/TaskList/TaskList";
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "addNewTask":
+      return [...state, action.payload];
+    case "changeTask":
+      return state.map((task, index) => {
+        if (index === action.payload.index) {
+          task = action.payload.task;
+        }
+        return task;
+      });
+    case "deleteTask":
+      return state.filter((task, index) => index !== action.payload);
 
+    default:
+      return state;
+  }
+};
 function App() {
-  const [tasksArr, setTasksArr] = useState([
+  const [state, dispatch] = useReducer(reducer, [
     {
       date: "10-07-2022",
       task_name: "Bad putzen",
@@ -16,37 +33,13 @@ function App() {
       done: true,
     },
   ]);
-  function addNewTask(date, taskName) {
-    setTasksArr([
-      ...tasksArr,
-      { date: date, task_name: taskName, done: false },
-    ]);
-  }
-  const deleteTask = (id) => {
-    setTasksArr(tasksArr.filter((task, index) => index !== id));
-    console.log(tasksArr);
-  };
-  const changeTask = (id, changedTask) => {
-    setTasksArr(
-      tasksArr.map((task, index) => {
-        if (index === id) {
-          task = changedTask;
-        }
-        return task;
-      })
-    );
-    console.log(tasksArr);
-  };
+
   return (
     <div className="App">
       <div className="App-header">
         <h1>Task list</h1>
-        <AddTask addNewTask={addNewTask} />
-        <TaskList
-          tasksArr={tasksArr}
-          deleteTask={deleteTask}
-          changeTask={changeTask}
-        />
+        <AddTask dispatch={dispatch} />
+        <TaskList tasksArr={state} dispatch={dispatch} />
 
         <a
           className="App-link"

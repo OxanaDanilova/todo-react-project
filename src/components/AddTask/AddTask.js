@@ -17,7 +17,14 @@ export default function AddTask(props) {
   function addNewTask(taskDate, taskName, event) {
     event.preventDefault();
     if (taskDate.trim() && taskName.trim()) {
-      props.addNewTask(taskDate, taskName);
+      props.dispatch({
+        type: "addNewTask",
+        payload: {
+          date: taskDate,
+          task_name: taskName,
+          done: false,
+        },
+      });
       setTaskName("");
       setTaskDate("");
     }
