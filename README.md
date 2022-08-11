@@ -1,10 +1,10 @@
 # Project name: ToDo App
 
-**[Demo link](https://oxanadanilova.github.io/timer-react-project/)**
+<!-- **[Demo link](https://oxanadanilova.github.io/timer-react-project/)** -->
 
 ---
 
-![chrono](./public/images/chrono.png)
+<!-- ![chrono](./public/images/chrono.png) -->
 
 ## Description
 
